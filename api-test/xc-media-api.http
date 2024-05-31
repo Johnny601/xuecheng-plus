@@ -1,0 +1,19 @@
+### 上传文件
+POST {{media_host}}/media/upload/coursefile
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="filedata"; filename="1.pdf"
+Content-Type: application/octet-stream
+
+< C:/Users/Johnny/Downloads/1.pdf
+
+### upload chunk
+POST {{media_host}}/media/upload/checkfile
+Content-Type: application/json
+
+{
+      "fileId": "5f1b3b3b4b1f4b0001b3b3b4",
+      "chunk": 0,
+      "chunks": 1
+}
