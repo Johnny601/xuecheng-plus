@@ -5,6 +5,7 @@ import com.xuecheng.base.exception.XueChengPlusException;
 import com.xuecheng.base.exception.XueChengPlusException2;
 import com.xuecheng.content.mapper.TeachplanMapper;
 import com.xuecheng.content.mapper.TeachplanMediaMapper;
+import com.xuecheng.content.model.dto.BindTeachplanMediaDto;
 import com.xuecheng.content.model.dto.SaveTeachplanDto;
 import com.xuecheng.content.model.dto.TeachplanDto;
 import com.xuecheng.content.model.po.Teachplan;
@@ -133,6 +134,27 @@ public class TeachplanServiceImpl implements TeachplanService {
 
                 break;
         }
+    }
+
+    @Transactional
+    @Override
+    public void associationMedia(BindTeachplanMediaDto bindTeachplanMediaDto) {
+        Long teachplanId = bindTeachplanMediaDto.getTeachplanId();
+        Teachplan teachplan = teachplanMapper.selectById(teachplanId);
+        if (teachplan == null) {
+            XueChengPlusException.cast("课程计划不存在");
+        }
+
+        teachplanMediaMapper.delete(
+                new LambdaQueryWrapper<TeachplanMedia>()
+                        .eq(TeachplanMedia::getTeachplanId, bindTeachplanMediaDto.getTeachplanId())
+        );
+
+        TeachplanMedia teachplanMedia = new TeachplanMedia();
+        BeanUtils.copyProperties(bindTeachplanMediaDto,teachplanMedia);
+        teachplanMedia.setCourseId(teachplan.getCourseId());
+        teachplanMedia.setMediaFilename(bindTeachplanMediaDto.getFileName());
+        teachplanMediaMapper.insert(teachplanMedia);
     }
 
     /**

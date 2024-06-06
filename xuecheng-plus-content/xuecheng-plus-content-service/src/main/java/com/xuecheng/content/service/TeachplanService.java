@@ -1,6 +1,7 @@
 package com.xuecheng.content.service;
 
 
+import com.xuecheng.content.model.dto.BindTeachplanMediaDto;
 import com.xuecheng.content.model.dto.SaveTeachplanDto;
 import com.xuecheng.content.model.dto.TeachplanDto;
 
@@ -14,4 +15,6 @@ public interface TeachplanService {
     public void deleteTeachplan(Long teachplanId);
 
     public void moveTeachplan(String movement, Long teachplanId);
+
+    public void associationMedia(BindTeachplanMediaDto bindTeachplanMediaDto);
 }

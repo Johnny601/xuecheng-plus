@@ -58,11 +58,11 @@ public class MinioTest {
     public void testGetFile() throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         GetObjectArgs getObjectArgs = GetObjectArgs.builder()
                 .bucket("testbucket")
-                .object("Surah")
+                .object("WutheringWaves-overseas-setup-1.5.2.0.exe")
                 .build();
 
         GetObjectResponse object = minioClient.getObject(getObjectArgs);
-        FileOutputStream outputStream = new FileOutputStream(new File("C:\\Users\\Johnny\\Downloads\\h-game.rar"));
+        FileOutputStream outputStream = new FileOutputStream(new File("C:\\Users\\Johnny\\Downloads\\game.exe"));
         IOUtils.copy(object, outputStream);
     }
 
