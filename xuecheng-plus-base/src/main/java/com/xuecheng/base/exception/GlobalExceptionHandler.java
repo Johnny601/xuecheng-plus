@@ -40,15 +40,18 @@ public class GlobalExceptionHandler {
         return new RestErrorResponse(errCode, errMessage);
     }
 
+    @ResponseBody
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public RestErrorResponse Exception(Exception e) {
-        String errMessage = e.getMessage();
-        log.error("【系统异常】{}",errMessage,e);
-
-        return new RestErrorResponse(CommonError.UNKOWN_ERROR.getErrMessage());
-
+    public RestErrorResponse exception(Exception e) {
+        log.error("【系统异常】{}",e.getMessage(),e);
+        e.printStackTrace();
+        if(e.getMessage().equals("Access is denied")) {
+            return new RestErrorResponse("没有操作此功能的权限");
+        }
+        return new RestErrorResponse(CommonError.UNKNOWN_ERROR.getErrMessage());
     }
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

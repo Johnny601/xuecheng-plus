@@ -92,6 +92,7 @@ public class CoursePublishServiceImpl implements CoursePublishService {
     @Transactional
     @Override
     public void commitAudit(Long companyId, Long courseId) {
+
         //约束校验
         CourseBase courseBase = courseBaseMapper.selectById(courseId);
         //课程审核状态
@@ -149,6 +150,7 @@ public class CoursePublishServiceImpl implements CoursePublishService {
         courseBase.setAuditStatus("202003");
         courseBaseMapper.updateById(courseBase);
     }
+
 
     @Transactional
     @Override
@@ -243,6 +245,12 @@ public class CoursePublishServiceImpl implements CoursePublishService {
 
     }
 
+    @Override
+    public CoursePublish getCoursePublish(Long courseId){
+        return coursePublishMapper.selectById(courseId);
+    }
+
+
     /**
      * @description 保存课程发布信息
      * @param courseId  课程id
@@ -286,7 +294,7 @@ public class CoursePublishServiceImpl implements CoursePublishService {
     private void saveCoursePublishMessage(Long courseId){
         MqMessage mqMessage = mqMessageService.addMessage("course_publish", String.valueOf(courseId), null, null);
         if (mqMessage == null) {
-            XueChengPlusException.cast(CommonError.UNKOWN_ERROR);
+            XueChengPlusException.cast(CommonError.UNKNOWN_ERROR);
         }
     }
 

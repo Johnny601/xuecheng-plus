@@ -42,7 +42,7 @@ public class MediaFilesController {
     @ApiOperation("上传文件")
     @RequestMapping(value = "/upload/coursefile",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public UploadFileResultDto upload(@RequestPart("filedata") MultipartFile filedata,
-                                      @RequestParam(value = "objectName", required = true) String objectName) throws IOException {
+                                      @RequestParam(value = "objectName", required = false) String objectName) throws IOException {
 
         Long companyId = 1232141425L;
         UploadFileParamsDto uploadFileParamsDto = new UploadFileParamsDto();
