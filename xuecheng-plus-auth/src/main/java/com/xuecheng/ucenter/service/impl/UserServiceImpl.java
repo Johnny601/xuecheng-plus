@@ -77,11 +77,10 @@ public class UserServiceImpl implements UserDetailsService {
      * @date 2022/9/29 12:19
      */
     public UserDetails getUserPrincipal(XcUserExt user){
-        String password = user.getPassword();
-        //用户权限,如果不加报Cannot pass a null GrantedAuthority collection
+        // get the user permission with the user ID
         String[] authorities = {};
         List<XcMenu> xcMenus = xcMenuMapper.selectPermissionByUserId(user.getId());
-        if (xcMenus.size() > 0) {
+        if (!xcMenus.isEmpty()) {
             ArrayList<String> permissions = new ArrayList<>();
             for (XcMenu m : xcMenus) {
                 permissions.add(m.getCode());
@@ -89,10 +88,9 @@ public class UserServiceImpl implements UserDetailsService {
             authorities = permissions.toArray(new String[0]);
         }
 
-        //将user对象转json
         String userString = JSON.toJSONString(user);
-        //创建UserDetails对象
-        return User.withUsername(userString).password(password).authorities(authorities).build();
+
+        return User.withUsername(userString).password("").authorities(authorities).build();
     }
 
 
